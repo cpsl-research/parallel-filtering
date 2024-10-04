@@ -1,0 +1,49 @@
+[tool.poetry]
+name = "parallel-filtering"
+version = "0.1.0-alpha.1"
+description = "Evaluating methods for parallel Kalman filtering"
+authors = ["Spencer Hallyburton <spencer.hallyburton@duke.edu>"]
+readme = "README.md"
+license = "MIT"
+repository = "https://github.com/cpsl-research/parallel-filtering.git"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+]
+keywords = ["Kalman filtering", "localization", "navigation"]
+include = ["CHANGELOG.md"]
+packages = [{include = "parafilter"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9"
+numpy = "^1.10"
+
+[tool.poetry.dev-dependencies]
+gdown = "^4.6.4"
+ipywidgets = "^8.0"
+jupyter = "^1.0.0"
+
+[tool.poetry.group.test.dependencies]
+snakeviz="^2.1.1"
+pytest = "^7"
+pytest-cov = "^4"
+bandit = "^1.7"
+black = {extras = ["jupyter"], version = "~22.12.0"}
+mypy = "^0"
+isort = "^5.11"
+flake8 = "^5.0"
+autoflake = "^1"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+addopts = "-ra -q -s"
+testpaths = [
+    "tests",
+    "integration",
+]
+
+[build-system]
+requires = [
+    "poetry-core",
+]
+build-backend = "poetry.core.masonry.api"
