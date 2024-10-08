@@ -1,8 +1,15 @@
 import numpy as np
 
 from parafilter.entities import Landmark
-from parafilter.measurements import AzimuthToLandmarkFor2D, RangeToLandmarkFor2D
+from parafilter.measurements import AzimuthToLandmarkFor2D, Position2DFor2D, RangeToLandmarkFor2D
 from parafilter.states import Standard2DState
+
+
+def test_position_msmt():
+    x0 = np.array([5, 6, 0, 0, 0.1, 0, 0])
+    X = Standard2DState(t0=0, x0=x0, P0=np.diag(np.ones(len(x0))))
+    M = Position2DFor2D(t=0.0, z=x0[:2], R=np.diag([3, 3]))
+    assert np.allclose(M.h(X), M.z)
 
 
 def test_range_to_landmark():
