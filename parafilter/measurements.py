@@ -2,7 +2,7 @@ from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .entities import Landmark
-    from .states import StateVector
+    from .old.states import StateVector
 
 import numpy as np
 

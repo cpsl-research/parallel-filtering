@@ -1,0 +1,3 @@
+[submodule "submodules/lib-estimators"]
+	path = submodules/lib-estimators
+	url = https://github.com/avstack-lab/lib-estimators

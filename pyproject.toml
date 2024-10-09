@@ -17,6 +17,7 @@ packages = [{include = "parafilter"}]
 [tool.poetry.dependencies]
 python = ">=3.9"
 numpy = "^1.10"
+lib-estimators = {path="./submodules/lib-estimators", develop=true}
 
 [tool.poetry.dev-dependencies]
 gdown = "^4.6.4"

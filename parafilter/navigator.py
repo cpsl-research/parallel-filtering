@@ -1,9 +1,12 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, List
 
 if TYPE_CHECKING:
     from .measurements import Measurement
 
 import numpy as np
+
+from estimators import inputs, measurements
+from estimators.filters import modular, states
 
 
 class BaseNavigator:
@@ -34,10 +37,42 @@ class BaseNavigator:
             raise RuntimeError("Propagation and measurement time must be synched")
 
 
-class KalmanNavigator:
-    """Interface for Kalman filter navigation algorithms"""
-    def _propagate(self, ):
-        pass
+class GroundVehicleNavigator:
+    def __init__(
+        self,
+        t0: float,
+        x0: List[float],
+        s0: float,
+        theta0: float,
+        gyrob0: float,
+        xp0: List[float],
+        sp0: float,
+        tp0: float,
+        gyrop0: float,
+        use_imu: bool,
+    ):
+        """Initialize the ground vehicle's navigator
+        
+        x0: initial position
+        s0: initial speed
+        theta0: initial heading angle
+        gyrob0: initial gyro bias
+        xp0: initial position variance
+        sp0: initial speed variance
+        tp0: initial heading variance
+        gyrop0: initial gyro bias variance
+        """
+        self.use_imu = use_imu
 
-    def _update(self, ):
-        pass
+        # states are constant for all filters
+        st_list = [
+            states.Position_XY_StateBlock(x=x0[0], y=x0[1], p0=xp0),
+            states.SpeedHeading_StateBlock(x=s0, yaw=theta0, p0=[sp0, tp0]),
+            states.FixedSensorBias_StateBlock(sensor_ID="gyro", b_init=[gyrob0], p0=[gyrop0])
+        ]
+
+        # set up the filter
+        self.filter = modular.ModularExtendedKalmanFilter(
+            states=states.FilterStateArray(st_list),
+            t0=t0,
+        )

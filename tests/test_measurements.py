@@ -2,7 +2,7 @@ import numpy as np
 
 from parafilter.entities import Landmark
 from parafilter.measurements import AzimuthToLandmarkFor2D, Position2DFor2D, RangeToLandmarkFor2D
-from parafilter.states import Standard2DState
+from parafilter.old.states import Standard2DState
 
 
 def test_position_msmt():
